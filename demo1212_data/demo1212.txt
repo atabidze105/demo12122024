@@ -1,0 +1,105 @@
+-- DROP SCHEMA demo1212_clone;
+
+CREATE SCHEMA demo1212_clone AUTHORIZATION user11065;
+
+-- DROP SEQUENCE demo1212_clone.manufacturer_id_seq;
+
+CREATE SEQUENCE demo1212_clone.manufacturer_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE demo1212_clone.product_id_seq;
+
+CREATE SEQUENCE demo1212_clone.product_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE demo1212_clone.sales_id_seq;
+
+CREATE SEQUENCE demo1212_clone.sales_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;-- demo1212_clone.manufacturer определение
+
+-- Drop table
+
+-- DROP TABLE manufacturer;
+
+CREATE TABLE manufacturer (
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+	"name" varchar NOT NULL,
+	patronage_start date NULL,
+	CONSTRAINT manufacturer_pk PRIMARY KEY (id)
+);
+
+
+-- demo1212_clone.product определение
+
+-- Drop table
+
+-- DROP TABLE product;
+
+CREATE TABLE product (
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+	"name" varchar NOT NULL,
+	is_active bool NOT NULL,
+	price float4 NOT NULL,
+	image varchar NULL,
+	manufacturer int4 NOT NULL,
+	description varchar NULL,
+	CONSTRAINT product_pk PRIMARY KEY (id),
+	CONSTRAINT product_manufacturer_fk FOREIGN KEY (manufacturer) REFERENCES manufacturer(id)
+);
+
+
+-- demo1212_clone.product_gallery определение
+
+-- Drop table
+
+-- DROP TABLE product_gallery;
+
+CREATE TABLE product_gallery (
+	product_id int4 NOT NULL,
+	image varchar NOT NULL,
+	CONSTRAINT product_gallery_product_fk FOREIGN KEY (product_id) REFERENCES product(id)
+);
+
+
+-- demo1212_clone.sales определение
+
+-- Drop table
+
+-- DROP TABLE sales;
+
+CREATE TABLE sales (
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+	product int4 NOT NULL,
+	quantity int4 NOT NULL,
+	sale_date timestamp NOT NULL,
+	CONSTRAINT sales_pk PRIMARY KEY (id),
+	CONSTRAINT sales_product_fk FOREIGN KEY (product) REFERENCES product(id)
+);
+
+
+-- demo1212_clone.attached_products определение
+
+-- Drop table
+
+-- DROP TABLE attached_products;
+
+CREATE TABLE attached_products (
+	main_product int4 NOT NULL,
+	attached_product int4 NOT NULL,
+	CONSTRAINT attached_products_pk PRIMARY KEY (main_product, attached_product),
+	CONSTRAINT attached_products_product_fk FOREIGN KEY (main_product) REFERENCES product(id),
+	CONSTRAINT attached_products_product_fk_1 FOREIGN KEY (attached_product) REFERENCES product(id)
+);
