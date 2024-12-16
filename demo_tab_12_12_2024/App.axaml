@@ -1,0 +1,14 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="demo_tab_12_12_2024.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.Styles>
+        <FluentTheme />
+		<Style Selector="Window">
+			<Setter Property="FontFamily" Value="Comic Sans MS"/>
+			<Setter Property="Icon" Value="Icon/school_logo.ico"/>
+		</Style>
+    </Application.Styles>
+</Application>

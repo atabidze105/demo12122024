@@ -1,0 +1,94 @@
+<Window 
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+	x:Class="demo_tab_12_12_2024.SalesWindow"
+	Title="SalesWindow"
+	x:CompileBindings="False">
+	<Grid
+		ShowGridLines="False"
+		RowDefinitions="auto,*,auto"
+		ColumnDefinitions="*,2*">
+		<TextBlock
+			Text="История продаж" Grid.ColumnSpan="2"
+			FontSize="18" Margin="5"
+			HorizontalAlignment="Center"/>
+		<ListBox
+			Name="lbox_products"
+			Grid.Row="1"
+			Background="White">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel
+						Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border
+						BorderBrush="Black" BorderThickness="1"
+						Width="180" Background="{Binding ProductBackgroundProperty}"
+						DoubleTapped="Border_DoubleTapped">
+						<StackPanel
+							Margin="10"
+							HorizontalAlignment="Center">
+							<Image
+								Source="{Binding ProductImage}" Height="140"/>
+							<TextBlock
+								Text="{Binding Name}"
+								HorizontalAlignment="Center"
+								TextWrapping="WrapWithOverflow"/>
+							<TextBlock
+								Text="{Binding Price, StringFormat='{}{0} руб'}"
+								HorizontalAlignment="Center"
+								TextWrapping="WrapWithOverflow"/>
+							<TextBlock
+								Text="неактивен" FontSize="10"
+								HorizontalAlignment="Center"
+								IsVisible="{Binding !IsActive}"/>
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<ListBox
+			Name="lbox_sales"
+			Grid.Column="1" Grid.Row="1"
+			Background="White">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border
+						BorderBrush="Black" BorderThickness="1"
+						Background="rgb(231, 250, 191)">
+						<Grid
+							ShowGridLines="False" ColumnDefinitions="*,*,*">
+							<TextBlock
+								Text="{Binding Id}"
+								VerticalAlignment="Center"/>
+							<TextBlock
+								Text="{Binding Product, StringFormat='ID товара: {0}'}"
+								VerticalAlignment="Center" HorizontalAlignment="Right"/>	
+							<TextBlock
+								Text="{Binding Quantity, StringFormat='Продано: {0}'}"
+								Grid.Column="1"
+								VerticalAlignment="Center"/>
+							<TextBlock
+								Text="{Binding SaleDate, StringFormat='Дата продажи: {0}'}"
+								Grid.Column="2"
+								VerticalAlignment="Center"/>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<Button
+			Name="btn_back"
+			Content="Назад"
+			Grid.Row="2" Margin="10"
+			Foreground="White"
+			Background="rgb(4, 160, 255)"
+			Click="BackToMain"/>
+	</Grid>
+</Window>

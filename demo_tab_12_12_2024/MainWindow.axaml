@@ -1,0 +1,90 @@
+<Window 
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+	x:Class="demo_tab_12_12_2024.MainWindow"
+	Title="demo_tab_12_12_2024"
+	x:CompileBindings="False">
+	<Grid
+		ShowGridLines="False"
+		RowDefinitions="auto,*,auto"
+		ColumnDefinitions="2*,*,*,*">
+		<TextBox
+			Name="tbox_searchbar"
+			Text="" Watermark="Найти..."
+			Margin="10" VerticalAlignment="Center"
+			KeyUp="SearchingActivity"/>
+		<ComboBox
+			Name="cbox_filtration"
+			Grid.Column="1"
+			Margin="10" VerticalAlignment="Center"
+			SelectionChanged="FiltrationChanged"/>
+		<ComboBox
+			Name="cbox_sorting"
+			Grid.Column="2"
+			Margin="10" VerticalAlignment="Center"
+			SelectionChanged="SortingChanged"/>
+		<StackPanel
+			Grid.Column="3"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Center"
+			Margin="10">
+			<Button
+				Name="btn_addProduct"
+				Content="Добавить товар"
+				Foreground="White"
+				Background="rgb(4, 160, 255)"
+				Click="ToAddWindow"/>
+			<Button
+				Name="btn_toSales"
+				Content="К продажам"
+				Foreground="White" HorizontalAlignment="Right"
+				Background="rgb(4, 160, 255)"
+				Click="ToSales"/>
+		</StackPanel>
+		<ListBox
+			Name="lbox_products"
+			Grid.Row="1" Grid.ColumnSpan="4"
+			Background="rgb(231, 250, 191)">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel 
+						Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border
+						BorderBrush="Black" BorderThickness="1" DoubleTapped="Border_DoubleTapped"
+						Width="200" Background="{Binding ProductBackgroundProperty}">
+						<StackPanel
+							Margin="10"
+							HorizontalAlignment="Center">
+							<Image
+								Source="{Binding ProductImage}" Height="140"/>
+							<TextBlock
+								Text="{Binding Name}"
+								HorizontalAlignment="Center"
+								TextWrapping="WrapWithOverflow"/>
+							<TextBlock
+								Text="{Binding Price, StringFormat='{}{0} руб'}"
+								HorizontalAlignment="Center"
+								TextWrapping="WrapWithOverflow"/>
+							<TextBlock
+								Text="неактивен" FontSize="10"
+								HorizontalAlignment="Center"
+								IsVisible="{Binding !IsActive}"/>
+						</StackPanel>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		<TextBlock
+			Name="tblock_count"
+			Grid.ColumnSpan="4"
+			Grid.Row="2" HorizontalAlignment="Center"
+			Margin="10" FontSize="18"/>
+	</Grid>
+</Window>
